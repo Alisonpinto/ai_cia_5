@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cloud Agent System · Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dashboard-body">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">☁ Cloud Agent System</div>
+        <div class="nav-right">
+            <span class="nav-user">👤 {{ username }}</span>
+            <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+        <!-- SEARCH SUMMARY STRIP -->
+        <div class="search-summary" id="searchSummary">
+            <span class="summary-chip" id="chipType">Type: —</span>
+            <span class="summary-chip" id="chipPrice">Max: —</span>
+            <span class="summary-chip" id="chipTrust">Min Trust: —</span>
+            <span class="summary-chip" id="chipDuration">Duration: —</span>
+            <button id="againBtn" class="btn btn-secondary btn-sm" style="margin-left:auto;">
+                ← Search Again
+            </button>
+        </div>
+
+        <!-- LOADING STATE -->
+        <div id="loadingState" class="card mt-4 text-center" style="display:none;">
+            <div class="spinner"></div>
+            <p class="heading mt-3">Agents are negotiating…</p>
+            <p class="hint mt-1">Client → Negotiator → Fuzzy → A* → Seller</p>
+        </div>
+
+        <!-- ERROR STATE -->
+        <div id="errorState" class="card mt-4 text-center" style="display:none;">
+            <div class="error-icon">⚠️</div>
+            <h2 class="heading">No matching service found</h2>
+            <p class="subheading" id="errorReason">Try increasing your budget or lowering trust requirements.</p>
+            <button onclick="window.location.href='/dashboard'" class="btn btn-primary mt-3">
+                Try Again
+            </button>
+        </div>
+
+        <!-- WINNER + RESULTS (hidden until data loaded) -->
+        <div id="resultsSection" style="display:none;">
+
+            <!-- WINNER HERO CARD -->
+            <div class="card winner-card mt-4">
+                <div class="winner-badge">🏆 Best Match</div>
+                <div class="winner-grid">
+                    <div>
+                        <h1 class="winner-name" id="winnerName">—</h1>
+                        <p class="winner-provider" id="winnerProvider">—</p>
+                        <div class="winner-specs" id="winnerSpecs"></div>
+                    </div>
+                    <div class="winner-score-box">
+                        <div class="score-circle">
+                            <span id="winnerScore">0.00</span>
+                            <small>Fuzzy Score</small>
+                        </div>
+                        <button id="contractBtn" class="btn btn-primary mt-3" style="width:100%;">
+                            💾 Accept & Create Contract
+                        </button>
+                        <p id="contractMsg" class="mt-2 text-center"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CANDIDATE COMPARISON TABLE -->
+            <div class="card mt-4">
+                <h2 class="section-title">📊 All Candidates Considered</h2>
+                <div class="table-wrap">
+                    <table class="data-table" id="candidatesTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Service</th>
+                                <th>Provider</th>
+                                <th>Price/hr</th>
+                                <th>Trust</th>
+                                <th>Fuzzy Score</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidatesBody">
+                            <!-- rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CHARTS ROW -->
+            <div class="charts-grid mt-4">
+
+                <!-- FUZZY SCORE BAR CHART -->
+                <div class="card">
+                    <h2 class="section-title">📈 Fuzzy Score Comparison</h2>
+                    <p class="subheading">Higher score = more desirable service.</p>
+                    <div class="chart-box">
+                        <canvas id="scoreChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- SERVICE TYPE DOUGHNUT -->
+                <div class="card">
+                    <h2 class="section-title">🥧 Candidate Distribution</h2>
+                    <p class="subheading">Breakdown by service type.</p>
+                    <div class="chart-box">
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AGENT CONVERSATION LOG -->
+            <div class="card mt-4">
+                <h2 class="section-title">💬 Agent Conversation Log</h2>
+                <p class="subheading">Real-time coordination between Client, Negotiator, Fuzzy, A* and Seller agents.</p>
+                <div class="agent-log" id="agentLog">
+                    <!-- log entries injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SYSTEM STATUS FOOTER -->
+    <footer class="app-footer">
+        <span>Cloud Agent System · v1.0</span>
+        <span>Multi-Agent Coordination · Fuzzy + A*</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
