@@ -271,8 +271,8 @@ Decentralized decision-making mirrors real-world service-oriented architecture:
 
 ## 👥 Authors
 
-- **Student Name**: [Your Name]
-- **Roll Number / Class**: [Your Roll Number / Class]
+- **Student Name**: Alison Pinto
+- **Roll Number / Class**: 5024148 IT
 - **Course**: Internal Assessment Project — Academic Year 2026
 
 ---
